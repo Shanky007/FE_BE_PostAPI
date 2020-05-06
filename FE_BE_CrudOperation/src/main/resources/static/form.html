@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Add user</title>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<h1>Add User</h1>
+
+	<form name="formName" id="form1">
+		<label for="name">Name:</label><br>
+		<input type="text" id="name" name="name"><br>
+		<label for="job">Job:</label><br>
+		<input type="text" id="job" name="job"><br>
+		<button type="button" id="submit" onclick="postToURL()">Save</button>
+	</form>
+	<script>
+		function postToURL() {
+			var nameText = document.getElementById('name').value;
+			var jobText = document.getElementById('job').value;
+
+			fetch("http://localhost:8080/submit", {
+				method: 'post',
+				headers: {
+					'Accept': 'application/json, text/plain',
+					'Content-type': 'application/json;charset=UTF-8'
+				},
+				body: JSON.stringify({
+					name: nameText,
+					job: jobText
+				})
+			})
+				.then(response => response.json(response))
+				.then(data => console.log(data))
+				.catch(error => console.log("Error detected: " + error))
+		}
+	</script>
+</body>
+
+</html>
